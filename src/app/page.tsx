@@ -11,7 +11,7 @@ export default function Home() {
 
   useEffect(() => {
     if (session) {
-      router.push('/dashboard')
+      router.push('/home')
     }
   }, [session, router])
 
@@ -95,7 +95,7 @@ export default function Home() {
                 Welcome back, {session.user?.name || 'User'}!
               </h2>
               <p className="text-gray-600 mb-6">
-                Redirecting you to the dashboard...
+                Redirecting you to the home page...
               </p>
             </div>
           )}
