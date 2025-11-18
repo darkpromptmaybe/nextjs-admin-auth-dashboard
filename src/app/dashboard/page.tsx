@@ -137,7 +137,7 @@ export default function DashboardPage() {
               </div>
 
               {/* Quick Actions */}
-              <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div className="bg-white rounded-lg shadow p-6">
                   <h4 className="font-semibold text-gray-900 mb-2">Users</h4>
                   <p className="text-gray-600 text-sm mb-3">Manage user accounts and permissions</p>
@@ -146,6 +146,17 @@ export default function DashboardPage() {
                     className="block w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-center"
                   >
                     Manage Users
+                  </a>
+                </div>
+                
+                <div className="bg-white rounded-lg shadow p-6">
+                  <h4 className="font-semibold text-gray-900 mb-2">Navigation</h4>
+                  <p className="text-gray-600 text-sm mb-3">Manage navbar items and sections</p>
+                  <a
+                    href="/navbar-management"
+                    className="block w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700 transition text-center"
+                  >
+                    Navbar Management
                   </a>
                 </div>
                 
@@ -160,7 +171,7 @@ export default function DashboardPage() {
                 <div className="bg-white rounded-lg shadow p-6">
                   <h4 className="font-semibold text-gray-900 mb-2">Settings</h4>
                   <p className="text-gray-600 text-sm mb-3">Configure application settings</p>
-                  <button className="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700 transition">
+                  <button className="w-full bg-orange-600 text-white py-2 rounded hover:bg-orange-700 transition">
                     Open Settings
                   </button>
                 </div>

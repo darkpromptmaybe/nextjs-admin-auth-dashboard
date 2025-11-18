@@ -1,15 +1,22 @@
 'use client'
 
-import { signIn, getSession } from 'next-auth/react'
+import { signIn, getSession, getProviders } from 'next-auth/react'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { FaGithub, FaGoogle } from 'react-icons/fa'
+
+interface Provider {
+  id: string
+  name: string
+  type: string
+}
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [providers, setProviders] = useState<Record<string, Provider>>({})
   const router = useRouter()
 
   useEffect(() => {
@@ -17,6 +24,13 @@ export default function LoginPage() {
     getSession().then((session) => {
       if (session) {
         router.push('/dashboard')
+      }
+    })
+    
+    // Get available providers
+    getProviders().then((providers) => {
+      if (providers) {
+        setProviders(providers)
       }
     })
   }, [router])
@@ -45,8 +59,13 @@ export default function LoginPage() {
     }
   }
 
-  const handleOAuthSignIn = (provider: string) => {
-    signIn(provider, { callbackUrl: '/dashboard' })
+  const handleOAuthSignIn = async (provider: string) => {
+    try {
+      setError('')
+      await signIn(provider, { callbackUrl: '/dashboard' })
+    } catch (error) {
+      setError(`Failed to sign in with ${provider}. Please try again.`)
+    }
   }
 
   return (
@@ -63,34 +82,42 @@ export default function LoginPage() {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           {/* OAuth Providers */}
-          <div className="space-y-3">
-            <button
-              onClick={() => handleOAuthSignIn('google')}
-              className="w-full flex justify-center items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              <FaGoogle className="mr-2 text-red-500" />
-              Sign in with Google
-            </button>
-            
-            <button
-              onClick={() => handleOAuthSignIn('github')}
-              className="w-full flex justify-center items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              <FaGithub className="mr-2 text-gray-800" />
-              Sign in with GitHub
-            </button>
-          </div>
+          {(providers.google || providers.github) && (
+            <div className="space-y-3">
+              {providers.google && (
+                <button
+                  onClick={() => handleOAuthSignIn('google')}
+                  className="w-full flex justify-center items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+                >
+                  <FaGoogle className="mr-2 text-red-500" />
+                  Sign in with Google
+                </button>
+              )}
+              
+              {providers.github && (
+                <button
+                  onClick={() => handleOAuthSignIn('github')}
+                  className="w-full flex justify-center items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+                >
+                  <FaGithub className="mr-2 text-gray-800" />
+                  Sign in with GitHub
+                </button>
+              )}
+            </div>
+          )}
 
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Or continue with</span>
+          {(providers.google || providers.github) && (
+            <div className="mt-6">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300" />
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Credentials Form */}
           <form onSubmit={handleCredentialsSignIn} className="mt-6 space-y-6">
