@@ -1,14 +1,34 @@
-# NextAuth Admin Dashboard with Stack Auth
+# NextJS Admin Dashboard
 
-A secure admin dashboard built with Next.js 15, NextAuth.js, Stack Auth, TypeScript, and Tailwind CSS.
+A comprehensive admin dashboard built with Next.js, featuring authentication, database-driven navigation, and a professional API structure.
 
-## Features
+![Next.js](https://img.shields.io/badge/Next.js-16.0.3-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![NextAuth.js](https://img.shields.io/badge/NextAuth.js-latest-green)
+![Prisma](https://img.shields.io/badge/Prisma-ORM-blue)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-38B2AC)
 
-- 🔐 **Multiple Authentication Providers**:
-  - **Stack Auth** - Modern authentication platform
-  - **Google OAuth**
-  - **GitHub OAuth** 
-  - **Email/Password** (Credentials)
+## 🚀 Features
+
+### 🔐 Authentication
+- **NextAuth.js Integration** with multiple providers
+- **Google OAuth** (configurable)
+- **GitHub OAuth** (configurable)  
+- **Credentials Provider** with demo login
+- **Session Management** with persistent authentication
+
+### 🗂️ Database-Driven Navigation
+- **Dynamic Navbar** with database storage
+- **Public/Private Navigation** separation
+- **Sections Support** for organized menu items
+- **Real-time Updates** without page refresh
+
+### 🏗️ Professional API Structure
+- **Type-Safe Validation** with Zod schemas
+- **Consistent Response Format** across all endpoints
+- **Centralized Error Handling** with proper HTTP codes
+- **Authentication Middleware** for protected routes
+- **Comprehensive Documentation** with examples
 - 🎨 **Modern UI** with Tailwind CSS
 - 🚀 **Next.js 15** with App Router
 - 📱 **Responsive Design**
